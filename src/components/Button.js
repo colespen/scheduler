@@ -11,10 +11,10 @@ export default function Button(props) {
 
   return (
     <button
-      // onClick={props.onClick} //onClick eventHandler attribute is = onClick??
-      onClick={() => props.onClick()} //onClick eventHandler attribute is = onClick??
+      // onClick={() => props.onCancel()} //onClick eventHandler attribute is = onClick
+      onClick={() => props.onClick()} 
       className={buttonClass} 
-      disabled={props.disabled} //same.. is it just, disabled = true?
+      disabled={props.disabled} 
     >
       {props.children}
     </button>
