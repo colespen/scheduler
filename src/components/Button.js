@@ -11,7 +11,8 @@ export default function Button(props) {
 
   return (
     <button
-      onClick={props.onClick} //onClick eventHandler attribute is = onClick??
+      // onClick={props.onClick} //onClick eventHandler attribute is = onClick??
+      onClick={() => props.onClick()} //onClick eventHandler attribute is = onClick??
       className={buttonClass} 
       disabled={props.disabled} //same.. is it just, disabled = true?
     >
