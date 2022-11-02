@@ -6,10 +6,11 @@ export default function InterviewerList(props) {
   
   const interviewers = props.interviewers.map(interviewer => (
     <InterviewerListItem
-      key={interviewer.id} 
+      key={interviewer.id}
+      // id={interviewer.id} 
       name={interviewer.name} 
       avatar={interviewer.avatar}
-      selected={interviewer.id === props.value} 
+      selected={interviewer.id === props.value} //selected is BOOLEAN
       setInterviewer={() => props.onChange(interviewer.id)}
     />
   ));

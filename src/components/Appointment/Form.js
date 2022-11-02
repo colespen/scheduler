@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
 
 export default function Form(props) {
+
+  const [student, setStudent] = useState(props.student || "");
+  const [interviewer, setInterviewer] = useState(props.interviewer || null);
+                                              //props.interviewer is ID (number)!
   return (
     <main className="appointment__card appointment__card--create">
 
@@ -13,16 +17,19 @@ export default function Form(props) {
             name="name"
             type="text"
             placeholder="Enter Student Name"
-            value={props.student}
+            value={student} //props.student reference
+            onChange={(e => setStudent(e.target.value))}
           /*
             This must be a controlled component
             your code goes here
           */
           />
         </form>
+
         <InterviewerList
         interviewers={props.interviewers}
-        interviewer={props.interviewer}        
+        value={interviewer} //interviewer = props.interviewer reference*
+        onChange={setInterviewer}
         />
       </section>
       
