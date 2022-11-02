@@ -1,5 +1,5 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+// import { useState } from "react";
 import "components/Application.scss";
 
 import DayList from "./DayList";
@@ -25,6 +25,7 @@ const days = [
 export default function Application(props) {
 
   const [day, setDay] = useState("Monday");
+  // we use props.name instead of day (state reference) to set name in DayListItem..?
 
   console.log(day)
 
@@ -38,14 +39,16 @@ export default function Application(props) {
           alt="Interview Scheduler"
         />
         <hr className="sidebar__separator sidebar--centered" />
+
         <nav className="sidebar__menu">
           <DayList
             days={days}
-            day={day}
-            setDay={setDay} 
+            value={day}
+            onChange={setDay} 
             //3 PROPS passed to DayList!!
           />
         </nav>
+
         <img
           className="sidebar__lhl sidebar--centered"
           src="images/lhl.png"
