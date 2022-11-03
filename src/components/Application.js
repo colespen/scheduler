@@ -1,26 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
+
 import DayList from "./DayList";
-import "components/Appointment";
-import "components/Application.scss";
 import Appointment from "components/Appointment";
 
-const days = [
-  {
-    id: 1,
-    name: "Monday",
-    spots: 2,
-  },
-  {
-    id: 2,
-    name: "Tuesday",
-    spots: 5,
-  },
-  {
-    id: 3,
-    name: "Wednesday",
-    spots: 0,
-  },
-];
+import "components/Appointment";
+import "components/Application.scss";
+
+// const days = [
+//   {
+//     id: 1,
+//     name: "Monday",
+//     spots: 2,
+//   },
+//   {
+//     id: 2,
+//     name: "Tuesday",
+//     spots: 5,
+//   },
+//   {
+//     id: 3,
+//     name: "Wednesday",
+//     spots: 0,
+//   },
+// ];
 
 const appointments = {
   "1": {
@@ -63,10 +66,16 @@ const appointments = {
 
 export default function Application(props) {
 
-  
-  const [day, setDay] = useState("Monday");
-  
-  console.log("Object.values appointments ---->", Object.values(appointments));
+  const [days, setDays] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8001/api/days")
+    .then(res => {
+      console.log("RESPONSE????", res.data);
+      setDays(res.data);
+    })
+    .catch(err => console.log(err.message))
+  }, [])
 
   const appointmentList = Object.values(appointments).map(apps => (
     <Appointment key={apps.id} {...apps} />
@@ -86,8 +95,8 @@ export default function Application(props) {
         <nav className="sidebar__menu">
           <DayList
             days={days}
-            value={day}
-            onChange={setDay}
+            value={days.name}
+            onChange={setDays}
           //3 PROPS passed to DayList!!
           />
         </nav>
