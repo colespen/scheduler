@@ -15,34 +15,45 @@ export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    appointments: {}
-  })
+    appointments: {},
+    interviewers: {}
+  });
+  // const dailyAppointments = []; ?? why were asked to make this array in earlier step ??
 
-  const dailyAppointments = [];
-  dailyAppointments.push(getAppointmentsForDay(state, state.day));
-  
   const setDay = day => setState({ ...state, day });
-  
+
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"), //doesn't need http://localhost?
       axios.get("/api/appointments"),
       axios.get("/api/interviewers")
     ])
-    .then(allVals => {
-      setState(prev => ({ 
-        ...prev, 
-        days: allVals[0].data,
-        appointments: allVals[1].data,
-        interviewers: allVals[2].data
-      }))
-    })
-    .catch(err => console.log(err.message))
-  }, [])
- 
-  const appointmentList = dailyAppointments[0].map(apps => (
-    <Appointment key={apps.id} {...apps} />
-    ));
+      .then(allVals => {
+        setState(prev => ({
+          ...prev,
+          days: allVals[0].data,
+          appointments: allVals[1].data,
+          interviewers: allVals[2].data
+        }));
+      })
+      .catch(err => console.log(err.message));
+  }, []);
+  
+  // console.log(dailyAppointments);
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+
+  const schedule = dailyAppointments.map(appointment => {
+    // const interview = getInterview(state, appointment.interview);
+
+    return (
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        // interview={interview}
+      />
+    );
+  });
 
   return (
     <main className="layout">
@@ -72,8 +83,8 @@ export default function Application(props) {
       </section>
 
       <section className="schedule">
-        {appointmentList}
-        
+        {schedule}
+        <Appointment time="5pm"/>
       </section>
 
     </main>

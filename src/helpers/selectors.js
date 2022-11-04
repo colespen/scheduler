@@ -14,5 +14,15 @@ export function getAppointmentsForDay(state, day) {
   return appointmentArray.map(id => {
    return state.appointments[id]; // return the obj's with current element #!!!
   });
+}
 
+export function getInterview(state, interview) {
+  // interview parameter is {student:... interviewer:...} obj
+  if (!interview) return null;
+  
+  const interviewerObj = 
+  state.interviewers[interview.interviewer]; // [ this is the interviewer id]
+  // interviewer information (3 properties)
+
+  return { student: interview.student, interviewer: interviewerObj };
 }
