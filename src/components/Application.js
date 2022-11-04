@@ -50,6 +50,8 @@ export default function Application(props) {
         key={appointment.id}
         {...appointment}
         interview={interview}
+        // onEdit={"onEdit"}
+        // onDelete={"onDelete"}
       />
     );
   });
