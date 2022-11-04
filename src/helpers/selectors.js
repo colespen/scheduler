@@ -17,12 +17,12 @@ export function getAppointmentsForDay(state, day) {
 }
 
 export function getInterview(state, interview) {
-  // interview parameter is {student:... interviewer:...} obj
+                                 // interview parameter is 
+                                 // {student:... interviewer:...} obj
   if (!interview) return null;
-  
-  const interviewerObj = 
-  state.interviewers[interview.interviewer]; // [ this is the interviewer id]
-  // interviewer information (3 properties)
 
+  const interviewerObj = // interviewer information (3 properties)
+  state.interviewers[interview.interviewer]; // [this is the interviewer: number]
+  
   return { student: interview.student, interviewer: interviewerObj };
 }
