@@ -16,6 +16,7 @@ export function getAppointmentsForDay(state, day) {
   });
 }
 
+
 export function getInterview(state, interview) {
                                  // interview parameter is 
                                  // {student:... interviewer:...} obj
@@ -25,4 +26,24 @@ export function getInterview(state, interview) {
   state.interviewers[interview.interviewer]; // [this is the interviewer: number]
   
   return { student: interview.student, interviewer: interviewerObj };
+}
+
+
+export function getInterviewersForDay(state, day) {
+
+  if (!Array.isArray(state.days)) return [];
+  if (state.days === undefined) return [];
+  if (state.days.length === 0) return [];
+
+  const filteredInterviewers = state.days.filter(d => d.name === day);
+  
+  if (filteredInterviewers.length === 0) return [];
+
+  const interviewerArray = filteredInterviewers[0].interviewers;
+  
+  return interviewerArray.map(id => {
+    // console.log(" ~~~~~ ", state.interviewers[id]);
+   return state.interviewers[id]; // return the obj's with current element # !!!
+
+  });
 }

@@ -4,7 +4,7 @@ import axios from 'axios';
 import DayList from "./DayList";
 import Appointment from "components/Appointment";
 
-import { getAppointmentsForDay, getInterview } from "helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 import "components/Appointment";
 import "components/Application.scss";
@@ -18,7 +18,6 @@ export default function Application(props) {
     appointments: {},
     interviewers: {}
   });
-  // const dailyAppointments = []; ?? why were asked to make this array in earlier step ??
 
   const setDay = day => setState({ ...state, day });
 
@@ -40,21 +39,25 @@ export default function Application(props) {
   }, []);
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
-  // console.log(dailyAppointments);
+
+  const dailyInterviews = getInterviewersForDay(state, state.day);
+  console.log(" ~~~~~~~ ", dailyInterviews);
 
   const schedule = dailyAppointments.map(appointment => {
     const interview = getInterview(state, appointment.interview);
-
+    // console.log(" ~~~~~~ ", interview);
     return (
       <Appointment
         key={appointment.id}
         {...appointment}
         interview={interview}
+        interviewers={dailyInterviews}
         // onEdit={"onEdit"}
         // onDelete={"onDelete"}
       />
     );
   });
+
 
   return (
     <main className="layout">
