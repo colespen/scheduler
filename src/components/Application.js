@@ -23,7 +23,7 @@ export default function Application(props) {
 
   useEffect(() => {
     Promise.all([
-      axios.get("/api/days"), //doesn't need http://localhost?
+      axios.get("/api/days"), //doesn't need http://localhost:8001?
       axios.get("/api/appointments"),
       axios.get("/api/interviewers")
     ])
@@ -54,8 +54,8 @@ export default function Application(props) {
         interview={interview}
         interviewers={dailyInterviews}
         bookInterview={bookInterview}
-        // onEdit={"onEdit"}
-        // onDelete={"onDelete"}
+      // onEdit={"onEdit"}
+      // onDelete={"onDelete"}
       />
     );
   });
@@ -63,16 +63,17 @@ export default function Application(props) {
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
-      interview: {...interview}
-    }
+      interview: { ...interview }
+    };
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
-    setState({ ...state, appointments }); //not showing locally in console yet
-    // console.log(state);
+    
+    return axios.put(`/api/appointments/${id}`, { interview })
+    .then(() => setState({ ...state, appointments }))
+      .catch(err => console.log(err.message));
   }
-
 
   return (
     <main className="layout">

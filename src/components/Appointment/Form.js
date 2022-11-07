@@ -16,7 +16,7 @@ export default function Form(props) {
     props.onCancel();
   };
   const onSubmit = () => {
-    props.onSave(student, interviewer);
+    props.onSave(student, interviewer); // onSave!!!!!
   }
   return (
     <main className="appointment__card appointment__card--create">
@@ -31,7 +31,7 @@ export default function Form(props) {
             type="text"
             placeholder="Enter Student Name"
             value={student} //student state
-            onChange={(e => setStudent(e.target.value))} //setState with input!
+            onChange={(e => setStudent(e.target.value))} //setState with input! **** USE PREV? (REDUCER)
             //controlled component
           />
         </form>
