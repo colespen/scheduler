@@ -24,7 +24,7 @@ export function getInterview(state, interview) {
 
   const interviewerObj = // interviewer information (3 properties)
   state.interviewers[interview.interviewer]; // [this is the interviewer: number]
-  
+
   return { student: interview.student, interviewer: interviewerObj };
 }
 

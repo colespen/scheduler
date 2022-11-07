@@ -15,6 +15,7 @@ export default function Appointment(props) {
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
+  const EDIT = "EDIT";
   const SAVING = "SAVING";
   const DELETE = "DELETE";
   const CONFIRM = "CONFIRM";
@@ -27,6 +28,11 @@ export default function Appointment(props) {
   };
 
   const save = (name, interviewer) => {
+    //make condition
+    if (!interviewer || !name) {
+      //transition(error);
+      return;
+    }
     const interview = {
       student: name,
       interviewer
@@ -40,7 +46,6 @@ export default function Appointment(props) {
   const confirmHandler = () => {
     transition(CONFIRM);
   };
-  // MAKE SEPARATE FUNCTION TO HANDLE CONFIRM PROMPT
 
   const deleteHandler = () => {
     transition(DELETE);
@@ -48,7 +53,13 @@ export default function Appointment(props) {
       .then(() => transition(EMPTY))
       .catch(err => console.log(err.meesage));
   };
-  
+
+  const editHandler = () => {
+    console.log("editHander")
+    transition(EDIT);
+    
+  }
+
   // console.log(" ~~~ interview prop IN Appointment ", interview);
   return (
     <article className="appointment">
@@ -58,12 +69,20 @@ export default function Appointment(props) {
         <Show
           student={interview.student}
           interviewer={interview.interviewer.name}
-          onEdit={() => console.log(" ~~~ onEdit ")}
+          onEdit={editHandler}
           onDelete={confirmHandler}
         />
       )}
       {mode === CREATE && (
         <Form
+          interviewers={interviewers}
+          onSave={save}
+          onCancel={back}
+        />
+      )}
+      {mode === EDIT && (
+        <Form 
+          student={interview.student}
           interviewers={interviewers}
           onSave={save}
           onCancel={back}

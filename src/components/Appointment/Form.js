@@ -4,7 +4,7 @@ import Button from "components/Button";
 
 export default function Form(props) {
 
-  const [student, setStudent] = useState(props.student || "");
+  const [student, setStudent] = useState(props.student || ""); //props.student is setting state!! (in edit)
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
   //props.interviewer is ID (number)!
   const resetForm = () => {
@@ -18,6 +18,7 @@ export default function Form(props) {
   const onSubmit = () => {
     props.onSave(student, interviewer); // onSave!!!!!
   }
+  // console.log(" ~~~ student state ", student);
   return (
     <main className="appointment__card appointment__card--create">
 
