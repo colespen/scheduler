@@ -4,6 +4,7 @@ import Show from "./Show";
 import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
+import Confirm from "./Confirm";
 
 import useVisualMode from "hooks/useVisualMode";
 
@@ -15,7 +16,8 @@ export default function Appointment(props) {
   const SHOW = "SHOW";
   const CREATE = "CREATE";
   const SAVING = "SAVING";
-  const DELETING = "DELETING";
+  const DELETE = "DELETE";
+  const CONFIRM = "CONFIRM";
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
@@ -35,23 +37,29 @@ export default function Appointment(props) {
       .catch(err => console.log(err.meesage));
   };
 
+  const confirmHandler = () => {
+    transition(CONFIRM);
+  };
+  // MAKE SEPARATE FUNCTION TO HANDLE CONFIRM PROMPT
+
   const deleteHandler = () => {
-    transition(DELETING);
+    transition(DELETE);
     cancelInterview(id)
       .then(() => transition(EMPTY))
       .catch(err => console.log(err.meesage));
   };
+  
   // console.log(" ~~~ interview prop IN Appointment ", interview);
   return (
     <article className="appointment">
       <Header time={time} />
       {mode === EMPTY && <Empty onAdd={addCreate} />}
-      {mode === SHOW && interview && ( //as long as interview is truthy as well....*
+      {mode === SHOW && ( // "&& interview" as long as interview is truthy as well....*
         <Show
           student={interview.student}
           interviewer={interview.interviewer.name}
           onEdit={() => console.log(" ~~~ onEdit ")}
-          onDelete={deleteHandler}
+          onDelete={confirmHandler}
         />
       )}
       {mode === CREATE && (
@@ -64,7 +72,12 @@ export default function Appointment(props) {
       {mode === SAVING && (
         <Status message="Saving" />
       )}
-      {mode === DELETING && (
+      {mode === CONFIRM && (
+        <Confirm message="Are you sure you'd like to delete?"
+          onCancel={back}
+          onConfirm={deleteHandler} />
+      )}
+      {mode === DELETE && (
         <Status message="Deleting" />
       )}
     </article>
