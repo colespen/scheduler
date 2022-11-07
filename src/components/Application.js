@@ -45,7 +45,7 @@ export default function Application(props) {
 
   const schedule = dailyAppointments.map(appointment => {
     const interview = getInterview(state, appointment.interview);
-    // console.log(" ~~~~~~ getInterview", interview);
+    // console.log(" ~~~~~~ interview = getInterview()", interview);
     return (
       <Appointment
         key={appointment.id}
@@ -54,8 +54,8 @@ export default function Application(props) {
         interview={interview}
         interviewers={dailyInterviews}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       // onEdit={"onEdit"}
-      // onDelete={"onDelete"}
       />
     );
   });
@@ -65,14 +65,31 @@ export default function Application(props) {
       ...state.appointments[id],
       interview: { ...interview }
     };
+    // console.log(" ~~~ bookInterview - appointment: ", appointment);
     const appointments = {
       ...state.appointments,
       [id]: appointment
     };
-    
-    return axios.put(`/api/appointments/${id}`, { interview })
-    .then(() => setState({ ...state, appointments }))
+    return axios.put(`/api/appointments/${id}`, { interview }) // does id and interivew body correlate here?
+      .then(() => setState(prev => ({ ...prev, appointments })
+      ))
       .catch(err => console.log(err.message));
+  }
+  // console.log(" ~~~ state!!! ", state);
+
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    }
+
+    return axios.delete(`/api/appointments/${id}`)
+    .then(() => setState({ ...state, appointments }))
+    .catch(err => console.log(err.message));
   }
 
   return (
