@@ -9,7 +9,7 @@ import useVisualMode from "hooks/useVisualMode";
 import "components/Appointment/styles.scss";
 
 export default function Appointment(props) {
-  const { interview, time, interviewers } = props;
+  const { id, time, interview, interviewers, bookInterview } = props;
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE"
@@ -19,6 +19,15 @@ export default function Appointment(props) {
 
   const addCreate = () => {
     transition(CREATE);
+  }
+
+  const save = (name, interviewer) => {
+    const interview = {
+      student: name, 
+      interviewer
+    }
+    bookInterview(id, interview);
+    transition(SHOW);
   }
 
   return (
@@ -36,7 +45,7 @@ export default function Appointment(props) {
       {mode === CREATE && (
         <Form 
           interviewers={interviewers}
-          onSave={() => console.log(" ~~~ onSave ")}
+          onSave={save}
           onCancel={back}
       />
       )}

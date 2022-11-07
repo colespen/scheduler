@@ -41,22 +41,37 @@ export default function Application(props) {
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   const dailyInterviews = getInterviewersForDay(state, state.day);
-  console.log(" ~~~~~~~ ", dailyInterviews);
+  // console.log(" ~~~~~~~ state", state);
 
   const schedule = dailyAppointments.map(appointment => {
     const interview = getInterview(state, appointment.interview);
-    // console.log(" ~~~~~~ ", interview);
+    // console.log(" ~~~~~~ getInterview", interview);
     return (
       <Appointment
         key={appointment.id}
-        {...appointment}
+        id={appointment.id}
+        time={appointment.time}
         interview={interview}
         interviewers={dailyInterviews}
+        bookInterview={bookInterview}
         // onEdit={"onEdit"}
         // onDelete={"onDelete"}
       />
     );
   });
+
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: {...interview}
+    }
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    setState({ ...state, appointments }); //not showing locally in console yet
+    // console.log(state);
+  }
 
 
   return (

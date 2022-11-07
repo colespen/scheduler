@@ -30,15 +30,15 @@ export default function Form(props) {
             name="name"
             type="text"
             placeholder="Enter Student Name"
-            value={student} //props.student reference
-            onChange={(e => setStudent(e.target.value))}
+            value={student} //student state
+            onChange={(e => setStudent(e.target.value))} //setState with input!
             //controlled component
           />
         </form>
         <InterviewerList
           interviewers={props.interviewers}
-          value={interviewer} //interviewer = props.interviewer reference*
-          onChange={setInterviewer}
+          value={interviewer} //interviewer state
+          onChange={setInterviewer} //setState *** could this be the state interviewer????
         />
       </section>
 
