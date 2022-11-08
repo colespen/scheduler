@@ -26,7 +26,6 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
-    console.log("!!!!!!! MODE", mode)
   const createHandler = () => {
     transition(CREATE);
   };
@@ -61,7 +60,7 @@ export default function Appointment(props) {
     transition(EDIT);
 
   };
-  // console.log(" ~~~ interview prop IN Appointment ", interview);
+  
   return (
     <article className="appointment">
       <Header time={time} />
