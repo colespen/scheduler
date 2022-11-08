@@ -31,10 +31,10 @@ export default function Appointment(props) {
   };
 
   const save = (name, interviewer) => {
-    if (!interviewer || !name) {
-      return;
-      //fix this
-    }
+    // if (!interviewer || !name) {
+    //   return;
+    //   //fix this
+    // }
     const interview = {
       student: name,
       interviewer
@@ -62,7 +62,7 @@ export default function Appointment(props) {
 
   };
   
-  console.log(interview);
+  console.log(" ~~~~~~ interview: ", interview);
   
   return (
     <article className="appointment">
@@ -87,6 +87,7 @@ export default function Appointment(props) {
         <Form
           student={interview.student}
           interviewers={interviewers}
+          interviewer={interview.interviewer.id}
           onSave={save}
           onCancel={back}
         />
