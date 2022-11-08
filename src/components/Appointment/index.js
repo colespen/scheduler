@@ -33,6 +33,7 @@ export default function Appointment(props) {
   const save = (name, interviewer) => {
     if (!interviewer || !name) {
       return;
+      //fix this
     }
     const interview = {
       student: name,
@@ -60,6 +61,8 @@ export default function Appointment(props) {
     transition(EDIT);
 
   };
+  
+  console.log(interview);
   
   return (
     <article className="appointment">
@@ -105,8 +108,6 @@ export default function Appointment(props) {
       {mode === ERR_DELETE && (
         <Error message="Could not cancel appointment." onClose={back}/>
       )}
-
-
     </article>
   );
 }

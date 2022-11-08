@@ -16,9 +16,10 @@ export default function Form(props) {
     props.onCancel();
   };
   const onSubmit = () => {
-    props.onSave(student, interviewer); // onSave!!!!!
+    props.onSave(student, interviewer); // save fn **** pass interviewer!!!!!! wtf***
   }
-  // console.log(" ~~~ student state ", student);
+  // console.log(" ~~~ interviewer state ", interviewer);
+  
   return (
     <main className="appointment__card appointment__card--create">
 
