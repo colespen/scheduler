@@ -5,15 +5,17 @@ import { useState } from "react";
 export default function useVisualMode(initial) {
   const [history, setHistory] = useState([initial]); //history is array of all modes
 
+  // const [mode, setHistory] = useState([initial]);
+
   function transition(nextmode, replace = false) {
 
     if (replace) {
       // let historyCopy = [...history]; // "first" "second"
       // historyCopy.pop(); // "first" 
-      setHistory([prev => prev.slice(0, prev.length -1), nextmode]); // "first" "third"   *keep the array!!
+      setHistory(prev => [...prev.slice(0, prev.length -1), nextmode]); // "first" "third"   *keep the array!!
 
     } else {
-      setHistory([...history, nextmode]); //new mode added to end of array - update history
+      setHistory(prev => [...prev, nextmode]); //new mode added to end of array - update history
     }
   }
   function back() {
@@ -25,3 +27,4 @@ export default function useVisualMode(initial) {
   return { mode: history[history.length - 1], transition, back };
   // mode is last el of history array
 }
+

@@ -38,16 +38,12 @@ export default function Application(props) {
       .catch(err => console.log(err.message));
   }, []);
 
-  const dailyAppointments = getAppointmentsForDay(state, state.day);
-
+  
   const dailyInterviews = getInterviewersForDay(state, state.day);
-  // console.log(" ~~~~~~~ state", state);
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   const schedule = dailyAppointments.map(appointment => {
     const interview = getInterview(state, appointment.interview);
-
-    console.log(" ~~~~~~ interview = getInterview()", interview);
-    
     return (
       <Appointment
         key={appointment.id}
@@ -57,7 +53,6 @@ export default function Application(props) {
         interviewers={dailyInterviews}
         bookInterview={bookInterview}
         cancelInterview={cancelInterview}
-      // onEdit={"onEdit"}
       />
     );
   });
@@ -74,8 +69,8 @@ export default function Application(props) {
     };
     return axios.put(`/api/appointments/${id}`, { interview }) // does id and interivew body correlate here?
       .then(() => setState(prev => ({ ...prev, appointments })
-      ))
-      .catch(err => console.log(err.message));
+      ));
+    // .catch(err => console.log(err.message));
   }
   // console.log(" ~~~ state!!! ", state);
 
@@ -87,12 +82,12 @@ export default function Application(props) {
     const appointments = {
       ...state.appointments,
       [id]: appointment
-    }
-
+    };
     return axios.delete(`/api/appointments/${id}`)
-    .then(() => setState({ ...state, appointments }))
-    .catch(err => console.log(err.message));
+      .then(() => setState({ ...state, appointments }));
+    // .catch(err => console.log(err.message)); // 
   }
+
 
   return (
     <main className="layout">
