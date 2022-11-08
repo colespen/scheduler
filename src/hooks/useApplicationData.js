@@ -1,12 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from 'axios';
 
-// import DayList from "./DayList";
-// import Appointment from "components/Appointment";
-
-// import "components/Appointment";
-// import "components/Application.scss";
-
 export default function useApplicationData() {
 
   const [state, setState] = useState({
@@ -15,6 +9,9 @@ export default function useApplicationData() {
     appointments: {},
     interviewers: {}
   });
+
+  console.log("~~~~~ INSIDE useAPP state", state.days);
+  console.log("~~~~~ INSIDE useAPP state.appointments", state.appointments);
 
   const setDay = day => setState({ ...state, day });
 
@@ -46,9 +43,11 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    return axios.put(`/api/appointments/${id}`, { interview }) // does id and interivew body correlate here?
-      .then(() => setState(prev => ({ ...prev, appointments })
-      ));
+    const days = getSpotsRemaining(appointments); 
+    return axios.put(`/api/appointments/${id}`, { interview })
+      .then(() => {
+        setState(prev => ({ ...prev, appointments, days }))//update state
+      });
     // .catch(err => console.log(err.message));
   }
   // console.log(" ~~~ state!!! ", state);
@@ -68,12 +67,27 @@ export default function useApplicationData() {
     // .catch(err => console.log(err.message)); // 
   }
 
-  const stateManager = {
+  function getSpotsRemaining(appointments) { //pass in new appointments state from inbookInterview
+   return state.days.map(day => {
+      const newDay = {...day} // spread each day in obj to make copy
+      let spots = 0;
+      newDay.appointments.forEach(id => {
+        if (appointments[id].interview === null) {
+          spots++;
+        } 
+      })
+      newDay.spots = spots;
+      return newDay
+    })
+  }
+  // all days being iterated through
+  // then take copy of each newDay.appointments and forEach spot++
+
+  return {
     state,
     setDay,
     bookInterview,
     cancelInterview
   };
-  
-  return stateManager;
+  // return stateManager;
 }

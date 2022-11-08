@@ -1,5 +1,4 @@
 import React from "react";
-// import axios from 'axios';
 
 import useApplicationData from "hooks/useApplicationData";
 import DayList from "./DayList";
@@ -54,7 +53,6 @@ export default function Application(props) {
             days={state.days}
             value={state.day}
             onChange={setDay}
-          //3 PROPS passed to DayList!!
           />
         </nav>
 
