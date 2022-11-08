@@ -46,14 +46,11 @@ export default function useApplicationData() {
     console.log(" ~~~ bookInterview - appointments: ", appointments);
     
     const days = getSpotsRemaining(appointments); 
-    return axios.put(`/api/appointments/${id}`, appointment )
+    return axios.put(`/api/appointments/${id}`, appointment ) // pass appointment not interview!!
       .then(() => {
         setState(prev => ({ ...prev, appointments, days }))//update state
       });
-    // .catch(err => console.log(err.message));
   }
-  // console.log(" ~~~ state!!! ", state);
-
 
   function cancelInterview(id) {
     const appointment = {
@@ -67,7 +64,6 @@ export default function useApplicationData() {
     const days = getSpotsRemaining(appointments);
     return axios.delete(`/api/appointments/${id}`)
       .then(() => setState({ ...state, appointments, days }));
-    // .catch(err => console.log(err.message)); // 
   }
 
   function getSpotsRemaining(appointments) { //pass in new appointments state from bookInterview

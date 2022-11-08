@@ -1,5 +1,4 @@
 import React from "react";
-// import PropTypes from 'prop-types';
 
 import InterviewerListItem from "./InterviewerListItem";
 
@@ -11,7 +10,6 @@ export default function InterviewerList(props) {
   const interviewers = props.interviewers.map(interviewer => (
     <InterviewerListItem
       key={interviewer.id}
-      //id={interviewer.id}
       name={interviewer.name} 
       avatar={interviewer.avatar}
       selected={interviewer.id === props.value} //selected is BOOLEAN
@@ -27,11 +25,3 @@ export default function InterviewerList(props) {
     </section>
   );
 }
-
-// InterviewerList.propTypes = {
-//   interviewer: PropTypes.array.isRequired,
-//   value: PropTypes.number.isRequired,
-//   onChange: PropTypes
-
-
-// }
