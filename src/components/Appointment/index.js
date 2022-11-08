@@ -31,10 +31,6 @@ export default function Appointment(props) {
   };
 
   const save = (name, interviewer) => {
-    // if (!interviewer || !name) {
-    //   return;
-    //   //fix this
-    // }
     const interview = {
       student: name,
       interviewer
@@ -86,8 +82,8 @@ export default function Appointment(props) {
       {mode === EDIT && (
         <Form
           student={interview.student}
-          interviewers={interviewers}
           interviewer={interview.interviewer.id}
+          interviewers={interviewers}
           onSave={save}
           onCancel={back}
         />
