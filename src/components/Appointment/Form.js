@@ -17,9 +17,6 @@ export default function Form(props) {
     resetForm();
     props.onCancel();
   };
-  // const onSubmit = () => {
-  //   props.onSave(student, interviewer); // save fn, **** pass interviewer not setStudent!!!!!! wtf***
-  // }
   // console.log(" ~~~ interviewer state ", interviewer);
 
   function validate() {
@@ -31,10 +28,11 @@ export default function Form(props) {
       setError("Please select an interviewer");
       return;
     }
+    setError("");
     props.onSave(student, interviewer);
   }
 
-  console.log(" ~~~~~~~~~ interviewer: ", interviewer)
+  // console.log(" ~~~~~~~~~ interviewer: ", interviewer)
   
   return (
     <main className="appointment__card appointment__card--create">

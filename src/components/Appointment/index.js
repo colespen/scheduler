@@ -61,7 +61,7 @@ export default function Appointment(props) {
   console.log(" ~~~~~~ interview: ", interview);
   
   return (
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
       <Header time={time} />
       {mode === EMPTY && <Empty onAdd={createHandler} />}
       {mode === SHOW && ( // "&& interview" as long as interview is truthy as well....*
