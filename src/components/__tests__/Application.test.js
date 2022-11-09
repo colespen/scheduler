@@ -126,58 +126,62 @@ describe("Application", () => {
   /////////////////////////////////////////////////////////////////////// 
   // ***** BROKEN TEST - FIX
 
-  it("shows the save error when failing to save an appointment", () => {
-    axios.put.mockRejectedValueOnce(async () => {
-      // Render application
-      const { container, debug } = render(<Application />);
+  it("shows the save error when failing to save an appointment", async () => {
+    axios.put.mockRejectedValueOnce();
+    // Render application
 
-      //Wait until text "Archie Cohen" is displayed
-      await waitForElement(() => getByText(container, "Archie Cohen"));
+    const { container } = render(<Application />);
 
-      //Click Edit button on booked appointment
-      const appointment = getAllByTestId(container, "appointment").find(
-        appointment => queryByText(appointment, "Archie Cohen")
-      );
-      fireEvent.click(queryByAltText(appointment, "Edit"));
+    //Wait until text "Archie Cohen" is displayed
+    await waitForElement(() => getByText(container, "Archie Cohen"));
 
-      // 3. Click the "Save" button on the booked appointment
-      fireEvent.click(getByText(appointment, "Save"));
+    //Click Edit button on booked appointment
+    const appointment = getAllByTestId(container, "appointment").find(
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
+    fireEvent.click(queryByAltText(appointment, "Edit"));
+    // 3. Click the "Save" button on the booked appointment
+    fireEvent.click(getByText(appointment, "Save"));
+    await waitForElement(() =>
+      getByText(appointment, "Error")
+    );
+    // //Display Error on Save Form
+    expect(getByText(appointment, "Error")).toBeInTheDocument();
 
-      //Display Error on Save Form
-      expect(getByText(appointment, "Error")).toBeInTheDocument();
-
-      //click close to return to show form
-      fireEvent.click(queryByAltText(appointment, "Close"));
-      expect(getByText(appointment, "Save")).toBeInTheDocument();
-    });
+    //click close to return to show form
+    fireEvent.click(queryByAltText(appointment, "Close"));
+    expect(getByText(appointment, "Save")).toBeInTheDocument();
   });
   ///////////////////////////////////////////////////////////////////////
   // ***** BROKEN TEST - FIX
-  
-  it.skip("shows the delete error when failing to delete an existing appointment", () => {
-    axios.delete.mockRejectedValueOnce(async () => {
-      // Render application
-      const { container, debug } = render(<Application />);
 
-      //Wait until text "Archie Cohen" is displayed
-      await waitForElement(() => getByText(container, "Archie Cohen"));
+  it("shows the delete error when failing to delete an existing appointment", async () => {
+    axios.delete.mockRejectedValueOnce();
 
-      //Click Edit button on booked appointment
-      const appointment = getAllByTestId(container, "appointment").find(
-        appointment => queryByText(appointment, "Archie Cohen")
-      );
-      fireEvent.click(queryByAltText(appointment, "Edit"));
+    // Render application
+    const { container, debug } = render(<Application />);
 
-      // 3. Click the "Cancel" button on the booked appointment
-      fireEvent.click(getByText(appointment, "Cancel"));
+    //Wait until text "Archie Cohen" is displayed
+    await waitForElement(() => getByText(container, "Archie Cohen"));
 
-      //Display Error on Save Form
-      expect(getByText(appointment, "Error")).toBeInTheDocument();
+    //Click Edit button on booked appointment
+    const appointment = getAllByTestId(container, "appointment").find(
+      appointment => queryByText(appointment, "Archie Cohen")
+    );
 
-      //click close to return to show form
-      fireEvent.click(queryByAltText(appointment, "Close"));
-      expect(getByText(appointment, "Save")).toBeInTheDocument();
-    });
+    fireEvent.click(queryByAltText(appointment, "Delete"));
+    
+    // 3. Click the "Cancel" button on the booked appointment
+    fireEvent.click(getByText(appointment, "Confirm"));
+    await waitForElement(() =>
+    getByText(appointment, "Error")
+    );
+    
+    // //Display Error on Save Form
+    expect(getByText(appointment, "Error")).toBeInTheDocument();
+    // //click close to return to show form
+    fireEvent.click(queryByAltText(appointment, "Close"));
+    expect(getByAltText(appointment, "Edit")).toBeInTheDocument();
   });
 
 
