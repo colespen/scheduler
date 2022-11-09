@@ -4,9 +4,8 @@ import Button from "components/Button";
 
 export default function Form(props) {
 
-  const [student, setStudent] = useState(props.student || ""); //props.student!! is setting state!! (in edit)
+  const [student, setStudent] = useState(props.student || ""); 
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-  //props.interviewer is ID (number)!
   const [error, setError] = useState("");
 
   const resetForm = () => {
@@ -17,7 +16,6 @@ export default function Form(props) {
     resetForm();
     props.onCancel();
   };
-  // console.log(" ~~~ interviewer state ", interviewer);
 
   function validate() {
     if (student === "") {
@@ -31,8 +29,6 @@ export default function Form(props) {
     setError("");
     props.onSave(student, interviewer);
   }
-
-  // console.log(" ~~~~~~~~~ interviewer: ", interviewer)
   
   return (
     <main className="appointment__card appointment__card--create">
@@ -46,17 +42,16 @@ export default function Form(props) {
             name="name"
             type="text"
             placeholder="Enter Student Name"
-            value={student} //student state
-            onChange={(e => setStudent(e.target.value))} //setState with input! **** USE PREV? (REDUCER)
-            //controlled component
+            value={student} 
+            onChange={(e => setStudent(e.target.value))} 
             data-testid="student-name-input"
           />
           <section className="appointment__validation">{error}</section>
         </form>
         <InterviewerList
           interviewers={props.interviewers}
-          value={interviewer} //interviewer state
-          onChange={setInterviewer} //setState *** could this be the state interviewer????
+          value={interviewer} 
+          onChange={setInterviewer} 
         />
       </section>
 

@@ -11,10 +11,9 @@ export default function Button(props) {
 
   return (
     <button
-      // onClick={() => props.onCancel()} //onClick eventHandler attribute is = onClick
-      onClick={() => props.onClick()} 
-      className={buttonClass} 
-      disabled={props.disabled} 
+      onClick={() => props.onClick()}
+      className={buttonClass}
+      disabled={props.disabled}
     >
       {props.children}
     </button>

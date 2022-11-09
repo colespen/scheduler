@@ -1,5 +1,3 @@
-//state parameter is the json from API
-
 export function getAppointmentsForDay(state, day) {
 
   if (!Array.isArray(state.days)) return [];
@@ -12,18 +10,16 @@ export function getAppointmentsForDay(state, day) {
   const appointmentArray = filteredAppointments[0].appointments;
 
   return appointmentArray.map(id => {
-   return state.appointments[id]; // return the obj's with current element #!!!
+    return state.appointments[id];
   });
 }
 
-
 export function getInterview(state, interview) {
-                                 // interview parameter is 
-                                 // {student:... interviewer:...} obj
+
   if (!interview) return null;
 
-  const interviewerObj = // interviewer information (3 properties)
-  state.interviewers[interview.interviewer]; // [this is the interviewer: number]
+  const interviewerObj =
+    state.interviewers[interview.interviewer];
 
   return { student: interview.student, interviewer: interviewerObj };
 }
@@ -36,14 +32,14 @@ export function getInterviewersForDay(state, day) {
   if (state.days.length === 0) return [];
 
   const filteredInterviewers = state.days.filter(d => d.name === day);
-  
+
   if (filteredInterviewers.length === 0) return [];
 
   const interviewerArray = filteredInterviewers[0].interviewers;
-  
+
   return interviewerArray.map(id => {
-    // console.log(" ~~~~~ ", state.interviewers[id]);
-   return state.interviewers[id]; // return the obj's with current element # !!!
+
+    return state.interviewers[id];
 
   });
 }

@@ -10,14 +10,11 @@ export default function useApplicationData() {
     interviewers: {}
   });
 
-  // console.log("~~~~~ INSIDE useAPP state", state.days);
-  // console.log("~~~~~ INSIDE useAPP state.appointments", state.appointments);
-
   const setDay = day => setState({ ...state, day });
 
   useEffect(() => {
     Promise.all([
-      axios.get("/api/days"), //doesn't need http://localhost:8001?
+      axios.get("/api/days"),
       axios.get("/api/appointments"),
       axios.get("/api/interviewers")
     ])
@@ -42,13 +39,11 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    // console.log(" ~~~ bookInterview - appointment: ", appointment);
-    // console.log(" ~~~ bookInterview - appointments: ", appointments); 
-    
-    const days = getSpotsRemaining(appointments); 
-    return axios.put(`/api/appointments/${id}`, appointment ) // pass appointment not interview!!
+
+    const days = getSpotsRemaining(appointments);
+    return axios.put(`/api/appointments/${id}`, appointment)
       .then(() => {
-        setState(prev => ({ ...prev, appointments, days }))//update state
+        setState(prev => ({ ...prev, appointments, days }));
       });
   }
 
@@ -66,23 +61,19 @@ export default function useApplicationData() {
       .then(() => setState({ ...state, appointments, days }));
   }
 
-  function getSpotsRemaining(appointments) { //pass in new appointments state from bookInterview
-   return state.days.map(day => {
-      const newDay = {...day} // spread each day in obj to make copy
+  function getSpotsRemaining(appointments) {
+    return state.days.map(day => {
+      const newDay = { ...day };
       let spots = 0;
       newDay.appointments.forEach(id => {
         if (appointments[id].interview === null) {
           spots++;
-        } 
-      })
+        }
+      });
       newDay.spots = spots;
-      return newDay
-    })
+      return newDay;
+    });
   }
-  // all days being iterated through
-  // then take copy of each newDay.appointments and forEach spot++
-
-  //if edit, add spot, if delete, remove spot (new fn)
 
   return {
     state,
@@ -90,5 +81,5 @@ export default function useApplicationData() {
     bookInterview,
     cancelInterview
   };
-  // return stateManager;
+
 }

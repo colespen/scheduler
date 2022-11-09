@@ -9,7 +9,6 @@ export default function Confirm(props) {
       <section className="appointment__actions">
         <Button onClick={props.onCancel} danger>Cancel</Button>
         <Button onClick={props.onConfirm} danger>Confirm</Button>
-        {/* naming this onClick is sufficient for debuggin? */}
       </section>
     </main>
   );

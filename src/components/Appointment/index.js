@@ -57,14 +57,12 @@ export default function Appointment(props) {
     transition(EDIT);
 
   };
-  
-  // console.log(" ~~~~~~ interview: ", interview);
-  
+
   return (
     <article className="appointment" data-testid="appointment">
       <Header time={time} />
       {mode === EMPTY && <Empty onAdd={createHandler} />}
-      {mode === SHOW && ( // "&& interview" as long as interview is truthy as well....*
+      {mode === SHOW && (
         <Show
           student={interview.student}
           interviewer={interview.interviewer.name}
@@ -97,13 +95,13 @@ export default function Appointment(props) {
           onConfirm={deleteHandler} />
       )}
       {mode === DELETE && (
-        <Status message="Deleting"/>
+        <Status message="Deleting" />
       )}
       {mode === ERR_SAVE && (
-        <Error message="Could not save appointment." onClose={back}/>
+        <Error message="Could not save appointment." onClose={back} />
       )}
       {mode === ERR_DELETE && (
-        <Error message="Could not cancel appointment." onClose={back}/>
+        <Error message="Could not cancel appointment." onClose={back} />
       )}
     </article>
   );
