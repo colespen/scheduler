@@ -15,10 +15,10 @@ export default function DayListItem(props) {
   });
 
   return (
-    <li className={dayClass} onClick={props.setDay} selected={props.selected}>
+    <li className={dayClass} onClick={props.setDay} selected={props.selected} data-testid="day">
                                     {/* sorybook works w/o this selected attribute.. */}
       <h2 className="text--regular">{props.name}</h2>
-      <h3 className="text--light" data-testid="spots-count">{formatSpots()}</h3>
+      <h3 className="text--light" data-testid="spots-remaining">{formatSpots()}</h3>
     </li>
   );
 }

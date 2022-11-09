@@ -1,7 +1,7 @@
 import React from "react";
 import {
-  render, cleanup, waitForElement, fireEvent, getByText, prettyDOM,
-  getAllByTestId, getByAltText, getByPlaceholderText,
+  render, cleanup, waitForElement, fireEvent, getByText, prettyDOM, getByTestId,
+  getAllByTestId, getByAltText, getByPlaceholderText, queryByText
 } from "@testing-library/react";
 
 import Application from "components/Application";
@@ -20,7 +20,7 @@ describe("Application", () => {
 
 
   it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
-    const { container } = render(<Application />);
+    const { container, debug } = render(<Application />);
 
     await waitForElement(() => getByText(container, "Archie Cohen"));
 
@@ -29,24 +29,27 @@ describe("Application", () => {
     const appointments = getAllByTestId(container, "appointment");
     const appointment = appointments[0];                            //after await!
 
-    console.log(prettyDOM(appointment));
-
     fireEvent.click(getByAltText(appointment, "Add"));
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Lydia Miller-Jones" }
     });
 
-    // expect(getByDisplayValue(appointment, "Lydia Miller-Jones")).toBeInTheDocument(); // Redundant
-
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer")); //altText is alt=props.name in <img>
-    
     fireEvent.click(getByText(appointment, "Save"));
 
+    expect(getByText(appointment, "Saving")).toBeInTheDocument();
+    
+    // await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
     await waitForElement(() => getByAltText(appointment, "Delete"));
-    expect(getByText(appointment, "Lydia Miller-Jones")).toBeInTheDocument(); //check again to see if saved
-    expect(getByText(appointment, "Sylvia Palmer")).toBeInTheDocument();
+    // expect(getByText(appointment, "Lydia Miller-Jones")).toBeInTheDocument(); //check again to see if saved
+    // expect(getByText(appointment, "Sylvia Palmer")).toBeInTheDocument();
 
-    expect(getAllByTestId(container, "spots-count")[0]).toHaveTextContent("no spots remaining"); //decrease spots by 1
+    const day = getAllByTestId(container, "day").find(day =>
+      queryByText(day, "Monday")
+    );
+  
+    expect(getByText(day, "no spots remaining")).toBeInTheDocument();
+    // expect(getAllByTestId(container, "day")[0]).toHaveTextContent("no spots remaining");
     //being mapped -> rendered as array, so use [index]!!
   });
 

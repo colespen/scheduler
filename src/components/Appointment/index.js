@@ -58,7 +58,7 @@ export default function Appointment(props) {
 
   };
   
-  console.log(" ~~~~~~ interview: ", interview);
+  // console.log(" ~~~~~~ interview: ", interview);
   
   return (
     <article className="appointment" data-testid="appointment">

@@ -42,8 +42,8 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    console.log(" ~~~ bookInterview - appointment: ", appointment);
-    console.log(" ~~~ bookInterview - appointments: ", appointments);
+    // console.log(" ~~~ bookInterview - appointment: ", appointment);
+    // console.log(" ~~~ bookInterview - appointments: ", appointments);
     
     const days = getSpotsRemaining(appointments); 
     return axios.put(`/api/appointments/${id}`, appointment ) // pass appointment not interview!!
