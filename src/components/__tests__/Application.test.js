@@ -123,8 +123,7 @@ describe("Application", () => {
     );
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   });
-  /////////////////////////////////////////////////////////////////////// 
-  // ***** BROKEN TEST - FIX
+  ///////////////////////////////////////////////////////////////////////
 
   it("shows the save error when failing to save an appointment", async () => {
     axios.put.mockRejectedValueOnce();
@@ -153,7 +152,6 @@ describe("Application", () => {
     expect(getByText(appointment, "Save")).toBeInTheDocument();
   });
   ///////////////////////////////////////////////////////////////////////
-  // ***** BROKEN TEST - FIX
 
   it("shows the delete error when failing to delete an existing appointment", async () => {
     axios.delete.mockRejectedValueOnce();
