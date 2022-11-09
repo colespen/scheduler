@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import {
   render, cleanup, waitForElement, fireEvent, getByText, prettyDOM,
   getAllByTestId, getByAltText, getByPlaceholderText, queryByText,
@@ -122,4 +123,65 @@ describe("Application", () => {
     );
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
   });
+  /////////////////////////////////////////////////////////////////////// 
+  // ***** BROKEN TEST - FIX
+
+  it("shows the save error when failing to save an appointment", () => {
+    axios.put.mockRejectedValueOnce(async () => {
+      // Render application
+      const { container, debug } = render(<Application />);
+
+      //Wait until text "Archie Cohen" is displayed
+      await waitForElement(() => getByText(container, "Archie Cohen"));
+
+      //Click Edit button on booked appointment
+      const appointment = getAllByTestId(container, "appointment").find(
+        appointment => queryByText(appointment, "Archie Cohen")
+      );
+      fireEvent.click(queryByAltText(appointment, "Edit"));
+
+      // 3. Click the "Save" button on the booked appointment
+      fireEvent.click(getByText(appointment, "Save"));
+
+      //Display Error on Save Form
+      expect(getByText(appointment, "Error")).toBeInTheDocument();
+
+      //click close to return to show form
+      fireEvent.click(queryByAltText(appointment, "Close"));
+      expect(getByText(appointment, "Save")).toBeInTheDocument();
+    });
+  });
+  ///////////////////////////////////////////////////////////////////////
+  // ***** BROKEN TEST - FIX
+  
+  it.skip("shows the delete error when failing to delete an existing appointment", () => {
+    axios.delete.mockRejectedValueOnce(async () => {
+      // Render application
+      const { container, debug } = render(<Application />);
+
+      //Wait until text "Archie Cohen" is displayed
+      await waitForElement(() => getByText(container, "Archie Cohen"));
+
+      //Click Edit button on booked appointment
+      const appointment = getAllByTestId(container, "appointment").find(
+        appointment => queryByText(appointment, "Archie Cohen")
+      );
+      fireEvent.click(queryByAltText(appointment, "Edit"));
+
+      // 3. Click the "Cancel" button on the booked appointment
+      fireEvent.click(getByText(appointment, "Cancel"));
+
+      //Display Error on Save Form
+      expect(getByText(appointment, "Error")).toBeInTheDocument();
+
+      //click close to return to show form
+      fireEvent.click(queryByAltText(appointment, "Close"));
+      expect(getByText(appointment, "Save")).toBeInTheDocument();
+    });
+  });
+
+
 });
+
+
+
