@@ -1,8 +1,21 @@
 # Interview Scheduler
 
+Interview Scheduler is a sleek and intuitive web application designed with the user in mind.
+functionality: to book, save, edit and delete interviews between a students and teacher.
+Book away!
+
 ## Setup
 
-Install dependencies with `npm install`.
+Please Install dependencies with `npm install`.
+
+- axios
+- classnames
+- normalize.css
+- react
+- react-dom
+- react-scripts
+- @testing-library/react-hooks
+- react-test-renderer
 
 ## Running Webpack Development Server
 
