@@ -1,8 +1,8 @@
 # Interview Scheduler
 
-`Interview Scheduler` is a sleek and intuitive web application designed with the user in mind.
+**Interview Scheduler** is a sleek and intuitive web application designed with the user in mind.
 <br>
-`functionality`: A student can book, save, edit and delete interviews with a selected teacher.
+**functionality**: A student can book, save, edit and delete interviews with a selected teacher.
 <br>
 Book away!
 
