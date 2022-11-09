@@ -35,5 +35,7 @@ npm test
 npm run storybook
 ```
 !["Select the day"](https://github.com/colespen/scheduler/blob/master/docs/InterviewSched_1.png)
+
 !["Create a new interview"](https://github.com/colespen/scheduler/blob/master/docs/nterviewSched_2.png)
+
 !["Save the interview"](https://github.com/colespen/scheduler/blob/master/docs/nterviewSched_3.png)
