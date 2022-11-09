@@ -31,17 +31,23 @@ npm test
 
 ## Running Storybook Visual Testbed
 
-## Note:
-
-- Thorough TDD: Visual and command line, unit and end-to-end testing
-- 97.76% Code Coverage
-
 ```sh
 npm run storybook
 ```
-</br>
+
+## Note:
+
+Thorough TDD: Visual and command line based, unit, intergration and end-to-end testing.
+### 97.76% Code Coverage
+
+<br/>
+
 !["Select the day"](https://github.com/colespen/scheduler/blob/master/docs/InterviewSched_1.png)
-</br>
+
+<br/>
+
 !["Create a new interview"](https://github.com/colespen/scheduler/blob/master/docs/nterviewSched_2.png)
-</br>
+
+<br/>
+
 !["Save the interview"](https://github.com/colespen/scheduler/blob/master/docs/nterviewSched_3.png)
