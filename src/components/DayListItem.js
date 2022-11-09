@@ -18,7 +18,7 @@ export default function DayListItem(props) {
     <li className={dayClass} onClick={props.setDay} selected={props.selected} data-testid="day">
                                     {/* sorybook works w/o this selected attribute.. */}
       <h2 className="text--regular">{props.name}</h2>
-      <h3 className="text--light" data-testid="spots-remaining">{formatSpots()}</h3>
+      <h3 className="text--light">{formatSpots()}</h3>
     </li>
   );
 }

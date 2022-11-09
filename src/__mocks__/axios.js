@@ -86,6 +86,14 @@ export default {
         statusText: "No Content",
         // data: fixtures.appointments //return data
       });
+  }),
+
+  delete: jest.fn((url, data) => {
+      return Promise.resolve({
+        status: 204,
+        statusText: "No Content",
+        // data: fixtures.appointments //return data
+      });
   })
 
 };
