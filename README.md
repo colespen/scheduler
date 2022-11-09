@@ -50,8 +50,8 @@ Thorough TDD: Visual and command line based, unit, integration and end-to-end te
 
 <br/>
 
-!["Create a new interview"](https://github.com/colespen/scheduler/blob/master/docs/nterviewSched_2.png)
-
+!["Create a new interview"](https://github.com/colespen/scheduler/blob/master/docs/nterviewSched_3.png)
 <br/>
 
-!["Save the interview"](https://github.com/colespen/scheduler/blob/master/docs/nterviewSched_3.png)
+!["Save the interview"](https://github.com/colespen/scheduler/blob/master/docs/nterviewSched_2.png)
+
