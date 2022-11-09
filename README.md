@@ -41,7 +41,7 @@ npm run storybook
 
 97.76% Code Coverage
 
-Thorough TDD: Visual and command line based, unit, intergration and end-to-end testing.
+Thorough TDD: Visual and command line based, unit, integration and end-to-end testing.
 
 
 <br/>
