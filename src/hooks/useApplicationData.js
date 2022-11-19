@@ -1,16 +1,25 @@
-import { useState, useEffect } from "react";
+import { useReducer, useEffect } from "react";
 import axios from 'axios';
+
+import reducer, {
+  SET_DAY,
+  SET_APPLICATION_DATA,
+  SET_INTERVIEW
+} from "reducers/application";
+
 
 export default function useApplicationData() {
 
-  const [state, setState] = useState({
+  const initialState = {             // use inital state
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: {}
-  });
+  };
 
-  const setDay = day => setState({ ...state, day });
+  const [state, dispatch] = useReducer(reducer, initialState);  //get state from reducer
+
+  const setDay = day => dispatch({ type: SET_DAY, day });     // use dispatch
 
   useEffect(() => {
     Promise.all([
@@ -19,61 +28,49 @@ export default function useApplicationData() {
       axios.get("/api/interviewers")
     ])
       .then(allVals => {
-        setState(prev => ({
-          ...prev,
+        dispatch({                     // use dispatch
+          type: SET_APPLICATION_DATA,
           days: allVals[0].data,
           appointments: allVals[1].data,
           interviewers: allVals[2].data
-        }));
+        });
       })
       .catch(err => console.log(err.message));
-  }, []);
+
+    webSocketConnection(); // realtime WebSocket update!
+
+  }, []); //    empty dependency array prevents infinite loop.
 
 
   function bookInterview(id, interview) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-
-    const days = getSpotsRemaining(appointments);
-    return axios.put(`/api/appointments/${id}`, appointment)
+    return axios.put(`/api/appointments/${id}`, { interview })
       .then(() => {
-        setState(prev => ({ ...prev, appointments, days }));
+        dispatch({ type: SET_INTERVIEW, id, interview });
       });
   }
 
   function cancelInterview(id) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-    const days = getSpotsRemaining(appointments);
     return axios.delete(`/api/appointments/${id}`)
-      .then(() => setState({ ...state, appointments, days }));
+      .then(() => {
+        dispatch({ type: SET_INTERVIEW, id, interview: null }); //update appointments & spots
+      });
   }
 
-  function getSpotsRemaining(appointments) {
-    return state.days.map(day => {
-      const newDay = { ...day };
-      let spots = 0;
-      newDay.appointments.forEach(id => {
-        if (appointments[id].interview === null) {
-          spots++;
-        }
-      });
-      newDay.spots = spots;
-      return newDay;
+  const webSocketConnection = () => {
+    const url = process.env.REACT_APP_WEBSOCKET_URL;
+    const ws = new WebSocket(url);
+
+    ws.addEventListener('message', event => {
+
+      // extract keys from parsed str then dispatch if correct type
+      const { type, id, interview } = JSON.parse(event.data);
+
+      if (type === 'SET_INTERVIEW') {
+        dispatch({ type, id, interview });
+      }
     });
-  }
+    return () => ws.close();
+  };
 
   return {
     state,

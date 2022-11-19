@@ -40,6 +40,5 @@ export function getInterviewersForDay(state, day) {
   return interviewerArray.map(id => {
 
     return state.interviewers[id];
-
   });
 }
