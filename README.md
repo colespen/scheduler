@@ -12,6 +12,7 @@ Please Install dependencies with `npm install`.
 
 - axios
 - classnames
+- dayjs
 - normalize.css
 - react
 - react-dom
