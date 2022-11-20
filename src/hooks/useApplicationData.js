@@ -7,11 +7,14 @@ import reducer, {
   SET_INTERVIEW
 } from "reducers/application";
 
+import getCurrentWeekday from "helpers/getCurrentWeekday";
+const currentDay = getCurrentWeekday()
+
 
 export default function useApplicationData() {
 
   const initialState = {             // use inital state
-    day: "Monday",
+    day: currentDay,
     days: [],
     appointments: {},
     interviewers: {}
